@@ -34,20 +34,19 @@ namespace leecode
         /* solution 2 */
         static int[] twoSum(int[] nums, int target)
         {
-            Dictionary<int, int> d = new Dictionary<int, int>();
-            for (int i = 0; i < nums.Length; i++)
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for(int i = 0; i < nums.Length; i++)
             {
-                d.Add(nums[i], i);
-            }
-            for (int i = 0; i < nums.Length; i++)
-            {
-                int complement = target - nums[i];
-                if (d.ContainsKey(complement) && d[complement] != i)
+                if (!dict.ContainsKey(nums[i]))
                 {
-                    return new int[] { i, d[complement] };
+                    dict.Add(target - nums[i], i);
                 }
+                else
+                {
+                    return new int[] { dict[nums[i]], i };
+                }
+                throw new ArgumentNullException("NO SUM SOLUTION");
             }
-            return null;
         }
 
         //2. Reverse Integer
@@ -97,6 +96,42 @@ namespace leecode
                     return false;
                 }
             }
+        }
+
+        //4. Roman to integer
+        static int RomanToInteger(string x)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            dict.Add('I', 1);
+            dict.Add('V', 5);
+            dict.Add('X', 10);
+            dict.Add('L', 50);
+            dict.Add('C', 100);
+            dict.Add('D', 500);
+            dict.Add('M', 1000);
+            int result = 0;
+            for (int i = 0; i < x.Length; i++)
+            {
+                //sepcial case
+                if (x[i] == 'I')
+                {
+                    if(i <= x.Length - 1)
+                    {
+                        if(x[i + 1] != 'I')
+                        {
+                            result += dict[x[i + 1]] - 1;
+                            i++;
+                            continue;
+                        }
+                    }
+                    result += 1;
+                }
+                else
+                {
+                    result += dict[x[i]];
+                }
+            }
+            return result;
         }
     }
 }
