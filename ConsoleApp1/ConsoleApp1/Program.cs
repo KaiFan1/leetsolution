@@ -35,7 +35,7 @@ namespace leecode
         static int[] twoSum(int[] nums, int target)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (!dict.ContainsKey(nums[i]))
                 {
@@ -101,6 +101,7 @@ namespace leecode
         //4. Roman to integer
         static int RomanToInteger(string x)
         {
+
             Dictionary<char, int> dict = new Dictionary<char, int>();
             dict.Add('I', 1);
             dict.Add('V', 5);
@@ -115,9 +116,9 @@ namespace leecode
                 //sepcial case
                 if (x[i] == 'I')
                 {
-                    if(i <= x.Length - 1)
+                    if (i <= x.Length - 1)
                     {
-                        if(x[i + 1] != 'I')
+                        if (x[i + 1] != 'I')
                         {
                             result += dict[x[i + 1]] - 1;
                             i++;
@@ -132,6 +133,24 @@ namespace leecode
                 }
             }
             return result;
+        }
+
+        //5. Longest Common Prefix
+        static string LongestCommonPrefix(string[] strs)
+        {
+            //if strs is null return ""
+            if (strs.Length == 0) return "";
+            //initialize the first common prefix
+            string prefix = strs[0];
+            for (int i = 1; i < strs.Length; i++)
+            {
+                while(strs[i].IndexOf(prefix) != 0)
+                {
+                    prefix = prefix.Substring(0, prefix.Length - 1);
+                    if (string.IsNullOrEmpty(prefix)) return "";
+                }
+            }
+            return prefix;
         }
     }
 }
