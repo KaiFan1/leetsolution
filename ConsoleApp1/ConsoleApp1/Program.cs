@@ -10,9 +10,8 @@ namespace leecode
     {
         static void Main(string[] args)
         {
-            int x = 121;
-            bool result = IsPaslindrome(x);
-            Console.WriteLine(result);
+            string s = "hello";
+            Console.WriteLine(s.IndexOf(s));
             Console.ReadLine();
         }
         //1. Two Sum
@@ -45,8 +44,9 @@ namespace leecode
                 {
                     return new int[] { dict[nums[i]], i };
                 }
-                throw new ArgumentNullException("NO SUM SOLUTION");
+                
             }
+            return null;
         }
 
         //2. Reverse Integer
@@ -68,34 +68,21 @@ namespace leecode
         //3. Palindrome Number
         static bool IsPaslindrome(int x)
         {
-            //if x is nagtive number
-            if (x < 0)
+            //if x is nagtive number or a number ended with 0
+            if(x < 0 || (x % 10 == 0 && x != 0))
             {
                 return false;
             }
-            else
-            {
-                //reverse x in order to compare them
-                int rev = 0;
-                int origin = x;
-                while (x != 0)
-                {
-                    int tem = x % 10;
-                    x /= 10;
-                    rev = rev * 10 + tem;
-                }
-                Console.WriteLine(rev);
-                Console.WriteLine(x);
-
-                if (rev.Equals(origin))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            int rev = 0;
+            while(x > rev)
+            {   
+                //rev will add one more number from the last digit of x
+                rev = rev * 10 + x % 10;
+                //x will remove one digit
+                x /= 10;
             }
+            //if x has odd number of digits. rev / 10 will remove the middle one,eg. 12321, rev / 10 will be 12
+            return x == rev || x == rev / 10;
         }
 
         //4. Roman to integer
@@ -139,7 +126,8 @@ namespace leecode
         static string LongestCommonPrefix(string[] strs)
         {
             //if strs is null return ""
-            if (strs.Length == 0) return "";
+            
+
             //initialize the first common prefix
             string prefix = strs[0];
             for (int i = 1; i < strs.Length; i++)
@@ -151,6 +139,37 @@ namespace leecode
                 }
             }
             return prefix;
+        }
+
+        //6. Valid Parentheses
+        static bool IsValidParenthese(string s)
+        {
+            //Stack Represents a simple last-in-first-out (LIFO) non-generic collection of objects. 
+            Stack<char> stack = new Stack<char>();
+            if (s.Length % 2 != 0) return false;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '(')
+                {
+                    stack.Push(')');
+                }
+                else if (s[i] == '[')
+                {
+                    stack.Push(']');
+                }
+                else if (s[i] == '{')
+                {
+                    stack.Push('}');
+                }
+                else
+                {
+                    if (stack.Count == 0 || s[i] != stack.Pop())
+                    {
+                        return false;
+                    }
+                }
+            }
+            return (stack.Count == 0);
         }
     }
 }
