@@ -34,17 +34,16 @@ namespace leecode
         static int[] twoSum(int[] nums, int target)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            for (int i = 0; i < nums.Length; i++)
+            for(int i = 0; i < nums.Length; i++)
             {
-                if (!dict.ContainsKey(nums[i]))
-                {
-                    dict.Add(target - nums[i], i);
-                }
-                else
+                dict.Add(nums[i], i);
+            }
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if(dict.ContainsKey(target - nums[i]) && dict[target - nums[i]] != i)
                 {
                     return new int[] { dict[nums[i]], i };
                 }
-                
             }
             return null;
         }
@@ -170,6 +169,37 @@ namespace leecode
                 }
             }
             return (stack.Count == 0);
+        }
+
+        //7. Merge Two Sorted Lists
+        public class ListNode {
+            public int val;
+            public ListNode next;
+            public ListNode(int x) { val = x; }
+        }
+        static ListNode MergeTwoLists(ListNode l1,ListNode l2)
+        {
+            ListNode res;
+            if (l1 == null && l2 == null)
+            {
+                return null;
+            }
+            else if (l1 == null)
+            {
+                res = l2;
+            }
+            else if (l2 == null)
+            {
+                res = l1;
+            }
+            else
+            {
+                res = (l1.val < l2.val ? l1 : l2);
+            }
+
+            res.next = MergeTwoLists((res == l1 ? l2 : l1), (res == l1 ? l1.next : l2.next));
+
+            return res;
         }
     }
 }
