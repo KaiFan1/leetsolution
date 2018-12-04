@@ -33,19 +33,23 @@ namespace leecode
         /* solution 2 */
         static int[] twoSum(int[] nums, int target)
         {
-            Dictionary<int, int> dict = new Dictionary<int, int>();
-            for(int i = 0; i < nums.Length; i++)
+            Dictionary<int, int> hash = new Dictionary<int, int>();
+            for (var i = 0; i < nums.Length; i++)
             {
-                dict.Add(nums[i], i);
-            }
-            for(int i = 0; i < nums.Length; i++)
-            {
-                if(dict.ContainsKey(target - nums[i]) && dict[target - nums[i]] != i)
+                if (!hash.ContainsKey(nums[i]))
                 {
-                    return new int[] { dict[nums[i]], i };
+                    hash.Add(nums[i], i);
+                }
+
+                var needed = target - nums[i];
+
+                if (hash.ContainsKey(needed) && hash[needed] != i)
+                {
+                    return new int[] { i, hash[needed] };
                 }
             }
-            return null;
+
+            return default(int[]);
         }
 
         //2. Reverse Integer
