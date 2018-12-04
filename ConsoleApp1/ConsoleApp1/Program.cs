@@ -205,5 +205,25 @@ namespace leecode
 
             return res;
         }
+
+        //8. Remove Duplicates from Sorted Array
+        static int RemoveDuplicates(int[] nums)
+        {
+            if (nums == null || nums.Length == 0) return 0;
+            int min = nums[0], duplicateNum = 0, len = nums.Length;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if(nums[i] == min)
+                {
+                    duplicateNum++;
+                }
+                else
+                {
+                    min = nums[i];
+                    nums[i - duplicateNum] = nums[i];
+                }
+            }
+            return len - duplicateNum;
+        }
     }
 }
